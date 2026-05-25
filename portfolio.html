@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rameshwar Barole — QA Engineer</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Outfit',sans-serif;background:#f5f0e8;color:#1a1610;overflow-x:hidden;cursor:none}
+
+.cur{width:10px;height:10px;background:#1a1610;border-radius:50%;position:fixed;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .15s}
+.cur-ring{width:38px;height:38px;border:1.5px solid rgba(26,22,16,.3);border-radius:50%;position:fixed;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .2s ease}
+
+/* ══ NAV ══ */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:1.2rem 2.5rem;
+  animation:fadeDown .7s ease both;
+}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px)}to{opacity:1;transform:translateY(0)}}
+.nav-logo{font-family:'Playfair Display',serif;font-weight:900;font-size:1.3rem;color:#1a1610;text-decoration:none;letter-spacing:-.02em}
+.nav-links{display:flex;gap:2rem;list-style:none}
+.nav-links a{text-decoration:none;color:#3d3628;font-size:.8rem;font-weight:500;letter-spacing:.05em;text-transform:uppercase;transition:color .2s}
+.nav-links a:hover{color:#1a1610}
+.nav-cta{
+  padding:.6rem 1.5rem;background:#1a1610;color:#f5f0e8;
+  font-size:.75rem;font-weight:500;letter-spacing:.07em;text-transform:uppercase;
+  text-decoration:none;border-radius:100px;transition:background .2s;
+}
+.nav-cta:hover{background:#8b6914}
+
+/* ══ HERO ══ */
+.hero{
+  width:100%;height:100vh;
+  position:relative;overflow:hidden;
+  /* warm yellow-cream gradient like the reference */
+  background:linear-gradient(150deg,#fdf6e3 0%,#f5e9c0 35%,#e8d49a 65%,#d4b870 100%);
+}
+
+/* big italic text BEHIND photo — like "Hey, there" in reference */
+.hero-behind{
+  position:absolute;
+  top:50%;left:50%;
+  transform:translate(-50%,-52%);
+  white-space:nowrap;
+  font-family:'Playfair Display',serif;
+  font-style:italic;font-weight:400;
+  font-size:clamp(6rem,18vw,16rem);
+  color:rgba(26,22,16,.07);
+  z-index:1;pointer-events:none;
+  letter-spacing:-.03em;line-height:1;
+  animation:fadeIn 1s .3s ease both;
+}
+
+/* person photo centered */
+.hero-photo{
+  position:absolute;
+  bottom:0;
+  left:50%;transform:translateX(-50%);
+  width:clamp(260px,38vw,480px);
+  height:clamp(380px,68vh,700px);
+  z-index:2;
+  animation:photoRise 1s .2s cubic-bezier(.22,.68,0,1.1) both;
+  display:flex;align-items:flex-end;justify-content:center;
+}
+@keyframes photoRise{from{opacity:0;transform:translateX(-50%) translateY(80px)}to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
+/* Photo placeholder — looks like a real person silhouette */
+.photo-inner{
+  width:100%;height:100%;
+  border-radius:220px 220px 0 0;
+  overflow:hidden;
+  position:relative;
+  /* gradient that mimics a warm-toned photo */
+  background:linear-gradient(180deg,
+    #c9a882 0%,
+    #b8946a 25%,
+    #a07850 50%,
+    #8b6340 75%,
+    #6b4a28 100%
+  );
+}
+/* head circle */
+.photo-inner::before{
+  content:'';
+  position:absolute;
+  top:6%;left:50%;transform:translateX(-50%);
+  width:38%;height:30%;
+  background:radial-gradient(ellipse,#d4aa80 0%,#c09060 60%,transparent 100%);
+  border-radius:50%;
+}
+/* body */
+.photo-inner::after{
+  content:'';
+  position:absolute;
+  bottom:0;left:10%;right:10%;
+  height:65%;
+  background:linear-gradient(180deg,#e8d5c0 0%,#d4c0a0 30%,#c0a880 70%,transparent 100%);
+  border-radius:60% 60% 0 0;
+}
+.photo-initials{
+  position:absolute;top:20%;left:50%;transform:translateX(-50%);
+  font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;
+  color:rgba(255,255,255,.3);z-index:1;letter-spacing:.05em;
+}
+
+/* badge — left side like reference */
+.hero-badge{
+  position:absolute;left:3rem;top:50%;transform:translateY(-30%);
+  z-index:10;
+  display:inline-flex;align-items:center;gap:.55rem;
+  background:rgba(255,255,255,.8);backdrop-filter:blur(10px);
+  border:1px solid rgba(200,169,110,.35);
+  padding:.5rem 1.1rem;border-radius:100px;
+  font-size:.72rem;font-weight:500;color:#3d3628;
+  animation:fadeIn 1s 1s ease both;white-space:nowrap;
+}
+.bdot{width:7px;height:7px;border-radius:50%;background:#4caf50;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(.8)}}
+
+/* specialisation text right side */
+.hero-spec{
+  position:absolute;right:3rem;top:50%;transform:translateY(-30%);
+  z-index:10;text-align:right;
+  font-size:.8rem;line-height:1.75;color:#3d3628;
+  max-width:190px;
+  animation:fadeIn 1s 1.1s ease both;
+}
+.hero-spec strong{display:block;font-size:.75rem;font-weight:600;color:#1a1610;margin-bottom:.25rem;letter-spacing:.04em;text-transform:uppercase}
+
+/* ── BOTTOM NAME STRIP ── exact Madison layout */
+.hero-bottom{
+  position:absolute;bottom:0;left:0;right:0;
+  display:flex;align-items:flex-end;justify-content:space-between;
+  padding:0 2.5rem 1.8rem;
+  z-index:10;pointer-events:none;
+}
+.hb-left{
+  font-family:'Playfair Display',serif;
+  font-weight:900;font-size:clamp(3.5rem,9.5vw,8.5rem);
+  line-height:.88;color:#1a1610;letter-spacing:-.03em;
+  animation:fadeUp 1s .6s ease both;pointer-events:auto;
+}
+.hb-right{
+  font-family:'Playfair Display',serif;
+  font-weight:900;font-size:clamp(2rem,5vw,4.5rem);
+  line-height:.9;color:#1a1610;letter-spacing:-.03em;
+  text-align:right;
+  animation:fadeUp 1s .8s ease both;pointer-events:auto;
+}
+.hb-right span{display:block}
+
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(40px)}to{opacity:1;transform:translateY(0)}}
+
+/* ══ SOCIAL / LINKS BAR ══ */
+.links-bar{
+  background:#1a1610;
+  padding:1.1rem 2.5rem;
+  display:flex;align-items:center;justify-content:center;gap:1.2rem;flex-wrap:wrap;
+}
+.lb-btn{
+  display:inline-flex;align-items:center;gap:.55rem;
+  text-decoration:none;font-size:.74rem;font-weight:500;
+  letter-spacing:.06em;text-transform:uppercase;
+  padding:.62rem 1.6rem;border-radius:100px;
+  transition:all .22s;
+}
+.lb-ghost{color:#f5f0e8;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07)}
+.lb-ghost:hover{background:rgba(255,255,255,.16);transform:translateY(-2px)}
+.lb-gold{background:#c8a96e;color:#1a1610;font-weight:600;border:none}
+.lb-gold:hover{background:#d4b87a;transform:translateY(-2px);box-shadow:0 8px 24px rgba(200,169,110,.45)}
+.lb-btn svg{flex-shrink:0}
+
+/* ══ SECTIONS ══ */
+section{padding:6rem 3rem}
+.lbl{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:#8b6914;margin-bottom:.55rem;display:flex;align-items:center;gap:.7rem}
+.lbl::after{content:'';width:32px;height:1px;background:#8b6914}
+.s-title{font-family:'Playfair Display',serif;font-size:clamp(2rem,4vw,3rem);font-weight:900;letter-spacing:-.02em;line-height:1.05;color:#1a1610;margin-bottom:3rem}
+
+/* ABOUT */
+.about-sec{background:#fff}
+.ab-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start}
+.ab-text p{font-size:.88rem;color:#3d3628;line-height:1.95;margin-bottom:1.1rem}
+.skill-rows{display:flex;flex-direction:column;gap:.9rem}
+.sk-row{display:flex;flex-direction:column;gap:.3rem}
+.sk-top{display:flex;justify-content:space-between;font-size:.78rem;font-weight:500;color:#1a1610}
+.sk-bar{height:2.5px;background:#e5ddd0;border-radius:2px;overflow:hidden}
+.sk-fill{height:100%;background:linear-gradient(90deg,#8b6914,#c8a96e);border-radius:2px;width:0;transition:width 1.3s cubic-bezier(.4,0,.2,1)}
+
+/* EXPERIENCE */
+.exp-sec{background:#f5f0e8}
+.exp-item{
+  border-top:1px solid rgba(26,22,16,.1);
+  padding:2.8rem 0;
+  display:grid;grid-template-columns:200px 1fr;gap:3.5rem;
+  opacity:0;transform:translateY(20px);transition:all .5s ease;
+}
+.exp-item.v{opacity:1;transform:translateY(0)}
+.ec-name{font-family:'Playfair Display',serif;font-weight:700;font-size:.95rem;color:#8b6914;margin-bottom:.3rem}
+.ec-date{font-size:.7rem;color:#6b5a3a;letter-spacing:.04em}
+.er-title{font-family:'Playfair Display',serif;font-size:1.6rem;font-weight:900;color:#1a1610;margin-bottom:1.3rem}
+.er-list{list-style:none}
+.er-list li{font-size:.82rem;color:#3d3628;line-height:1.9;padding:.3rem 0 .3rem 1.5rem;position:relative}
+.er-list li::before{content:'—';position:absolute;left:0;color:#c8a96e}
+
+/* PROJECTS */
+.proj-sec{background:#fff}
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:1.5rem}
+.pc{
+  border:1px solid rgba(26,22,16,.09);border-radius:3px;padding:2.5rem;
+  background:#fefcf9;position:relative;overflow:hidden;
+  opacity:0;transform:translateY(24px);transition:all .5s ease;
+}
+.pc.v{opacity:1;transform:translateY(0)}
+.pc:hover{border-color:#c8a96e;box-shadow:0 12px 40px rgba(200,169,110,.18)}
+.pc-n{position:absolute;top:1rem;right:1.5rem;font-family:'Playfair Display',serif;font-size:4rem;font-weight:900;color:rgba(26,22,16,.04);line-height:1;pointer-events:none}
+.pc-tag{display:inline-block;font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;color:#8b6914;border:1px solid rgba(139,105,20,.25);padding:.2rem .7rem;border-radius:2px;margin-bottom:1rem}
+.pc-title{font-family:'Playfair Display',serif;font-size:1.2rem;font-weight:700;color:#1a1610;margin-bottom:.8rem;line-height:1.25}
+.pc-desc{font-size:.79rem;color:#3d3628;line-height:1.85;margin-bottom:1.2rem}
+.pc-pills{display:flex;flex-wrap:wrap;gap:.4rem}
+.pp{font-size:.6rem;padding:.22rem .7rem;background:#f0ebe0;color:#3d3628;border-radius:2px;letter-spacing:.04em}
+.pc-impact{margin-top:1.2rem;padding-top:1.2rem;border-top:1px solid rgba(26,22,16,.07);font-size:.74rem;color:#3d3628}
+.pc-impact b{color:#8b6914;font-weight:500}
+
+/* AWARDS */
+.aw-sec{background:#1a1610}
+.aw-sec .lbl{color:#c8a96e}
+.aw-sec .lbl::after{background:#c8a96e}
+.aw-sec .s-title{color:#f5f0e8}
+.aw-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1px;background:rgba(255,255,255,.06)}
+.aw-card{background:#1a1610;padding:3rem 2.5rem;opacity:0;transform:translateY(16px);transition:all .5s ease}
+.aw-card.v{opacity:1;transform:translateY(0)}
+.aw-card:hover{background:#231f17}
+.aw-ico{font-size:2rem;margin-bottom:.8rem}
+.aw-yr{font-size:.66rem;letter-spacing:.12em;color:#c8a96e;margin-bottom:.3rem;text-transform:uppercase}
+.aw-name{font-family:'Playfair Display',serif;font-size:1.15rem;font-weight:700;color:#f5f0e8;margin-bottom:.6rem}
+.aw-desc{font-size:.77rem;color:rgba(245,240,232,.45);line-height:1.8}
+
+/* EDUCATION */
+.edu-sec{background:#f5f0e8}
+.edu-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.edu-card{background:#fff;border-radius:3px;padding:2.5rem;border:1px solid rgba(26,22,16,.08);opacity:0;transform:translateY(16px);transition:all .5s ease}
+.edu-card.v{opacity:1;transform:translateY(0)}
+.edu-deg{font-family:'Playfair Display',serif;font-size:1.05rem;font-weight:700;color:#1a1610;margin-bottom:.4rem}
+.edu-inst{font-size:.78rem;color:#8b6914;margin-bottom:.25rem}
+.edu-per{font-size:.72rem;color:#6b5a3a}
+.edu-gr{font-size:.76rem;font-weight:600;color:#8b6914;margin-top:.4rem}
+
+/* CONTACT */
+.ct-sec{background:#fff;text-align:center}
+.ct-sec .lbl{justify-content:center}
+.ct-sec .lbl::after{display:none}
+.ct-big{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,9vw,7rem);font-weight:900;letter-spacing:-.03em;line-height:.92;color:#1a1610;margin-bottom:1.8rem}
+.ct-big em{font-style:italic;color:#8b6914}
+.ct-sub{font-size:.85rem;color:#3d3628;max-width:360px;margin:0 auto 2.5rem;line-height:1.85}
+.ct-row{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap}
+.ct-a{
+  display:inline-flex;align-items:center;gap:.5rem;
+  text-decoration:none;font-size:.73rem;font-weight:500;
+  letter-spacing:.05em;text-transform:uppercase;
+  padding:.65rem 1.5rem;border-radius:100px;
+  border:1.5px solid rgba(26,22,16,.15);color:#3d3628;
+  transition:all .22s;
+}
+.ct-a:hover{border-color:#8b6914;color:#8b6914;background:rgba(139,105,20,.04)}
+
+/* FOOTER */
+footer{background:#1a1610;color:rgba(245,240,232,.4);padding:1.6rem 3rem;display:flex;justify-content:space-between;align-items:center;font-size:.68rem;letter-spacing:.06em}
+footer a{color:#c8a96e;text-decoration:none}
+
+/* SCROLL BAR */
+.sp{position:fixed;top:0;left:0;height:2px;background:#8b6914;z-index:600;transition:width .1s}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem}
+  .nav-links{display:none}
+  section{padding:4.5rem 1.5rem}
+  .ab-grid{grid-template-columns:1fr}
+  .exp-item{grid-template-columns:1fr;gap:.8rem}
+  .hero-badge{left:1.2rem}
+  .hero-spec{right:1.2rem;font-size:.7rem;max-width:140px}
+  .hero-bottom{padding:0 1.2rem 1.2rem}
+  footer{flex-direction:column;gap:.4rem;text-align:center}
+}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="ring"></div>
+<div class="sp" id="sp"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Rameshwar.</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#projects">Works</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#awards">Awards</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <a href="#contact" class="nav-cta">Hire Me</a>
+</nav>
+
+<!-- ══ HERO — Madison style ══ -->
+<div class="hero">
+
+  <!-- large italic text floating behind photo -->
+  <div class="hero-behind">Hey, there</div>
+
+  <!-- centred person silhouette -->
+  <div class="hero-photo">
+    <div class="photo-inner">
+      <div class="photo-initials">RB</div>
+    </div>
+  </div>
+
+  <!-- badge left -->
+  <div class="hero-badge">
+    <span class="bdot"></span>
+    Available for new opportunities
+  </div>
+
+  <!-- spec right -->
+  <div class="hero-spec">
+    <strong>Specialized in</strong>
+    QA Automation, GenAI Solutions, and CI/CD Pipelines.
+  </div>
+
+  <!-- bottom name band — Madison layout -->
+  <div class="hero-bottom">
+    <div class="hb-left">I AM<br>RAMESHWAR</div>
+    <div class="hb-right">
+      <span>QA</span>
+      <span>ENGINEER</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- ══ LINKS BAR ══ -->
+<div class="links-bar">
+  <a href="https://github.com/Rameshwar002" target="_blank" class="lb-btn lb-ghost">
+    <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.39.6.11.82-.26.82-.58v-2.03c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.08-.74.08-.73.08-.73 1.2.08 1.83 1.23 1.83 1.23 1.06 1.82 2.79 1.3 3.47.99.11-.77.41-1.3.75-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.12-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.14 3 .4 2.28-1.55 3.29-1.23 3.29-1.23.66 1.66.24 2.88.12 3.18.77.84 1.23 1.91 1.23 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.21.7.82.58C20.56 21.8 24 17.3 24 12c0-6.63-5.37-12-12-12z"/></svg>
+    GitHub
+  </a>
+  <a href="https://linkedin.com/in/rameshwar-barole" target="_blank" class="lb-btn lb-ghost">
+    <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
+    LinkedIn
+  </a>
+  <a href="#" class="lb-btn lb-gold" id="cvBtn">
+    <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+    Download CV
+  </a>
+</div>
+
+<!-- ABOUT -->
+<section id="about" class="about-sec">
+  <div class="ab-grid">
+    <div>
+      <div class="lbl">About Me</div>
+      <h2 class="s-title">Building Quality Into Every Line of Code</h2>
+      <div class="ab-text">
+        <p>I'm Rameshwar Barole — QA Engineer at Tata Consultancy Services, Nagpur. I specialise in test automation, GenAI-powered tooling, and CI/CD pipelines that ship reliable software fast.</p>
+        <p>With a B.E. and PG-DAC in Advanced Computing (CDAC Chennai), I bring both depth and breadth — from Selenium frameworks to LLM-based test generators.</p>
+        <p>Recognised twice at TCS in 2024 for high-impact delivery and crisis resolution under pressure.</p>
+      </div>
+    </div>
+    <div>
+      <div class="lbl">Technical Skills</div>
+      <div class="skill-rows" id="skill-rows">
+        <div class="sk-row"><div class="sk-top"><span>Selenium / Test Automation</span><span>90%</span></div><div class="sk-bar"><div class="sk-fill" data-w="90"></div></div></div>
+        <div class="sk-row"><div class="sk-top"><span>Python Scripting</span><span>85%</span></div><div class="sk-bar"><div class="sk-fill" data-w="85"></div></div></div>
+        <div class="sk-row"><div class="sk-top"><span>Java</span><span>80%</span></div><div class="sk-bar"><div class="sk-fill" data-w="80"></div></div></div>
+        <div class="sk-row"><div class="sk-top"><span>GenAI / LLMs</span><span>78%</span></div><div class="sk-bar"><div class="sk-fill" data-w="78"></div></div></div>
+        <div class="sk-row"><div class="sk-top"><span>API Testing (Postman)</span><span>85%</span></div><div class="sk-bar"><div class="sk-fill" data-w="85"></div></div></div>
+        <div class="sk-row"><div class="sk-top"><span>CI/CD & DevOps</span><span>75%</span></div><div class="sk-bar"><div class="sk-fill" data-w="75"></div></div></div>
+        <div class="sk-row"><div class="sk-top"><span>PLSQL</span><span>72%</span></div><div class="sk-bar"><div class="sk-fill" data-w="72"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience" class="exp-sec">
+  <div class="lbl">Career</div>
+  <h2 class="s-title">Professional Experience</h2>
+  <div class="exp-item">
+    <div><div class="ec-name">Tata Consultancy Services</div><div class="ec-date">Dec 2023 — Present · Nagpur</div></div>
+    <div>
+      <div class="er-title">QA Engineer</div>
+      <ul class="er-list">
+        <li>Developed & maintained Selenium WebDriver automation scripts, improving test coverage across critical modules.</li>
+        <li>Built Java and Python automation to eliminate repetitive workflows, reducing manual effort substantially.</li>
+        <li>Integrated tests into CI/CD pipelines, cutting regression time per release cycle.</li>
+        <li>Tracked defects via JIRA in cross-functional teams, improving defect resolution speed.</li>
+        <li>Conducted regression testing for new releases, reducing post-release production defects.</li>
+        <li>Led code reviews, providing constructive feedback that raised script quality team-wide.</li>
+        <li>Participated in daily stand-ups and sprint reviews in an agile delivery framework.</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects" class="proj-sec">
+  <div class="lbl">Works</div>
+  <h2 class="s-title">Featured Projects</h2>
+  <div class="pg">
+    <div class="pc"><div class="pc-n">01</div><div class="pc-tag">Automation</div><div class="pc-title">Selenium Test Automation Framework</div><div class="pc-desc">End-to-end framework using Selenium + Java with Page Object Model. TestNG for parallel execution, HTML reporting for test health visibility.</div><div class="pc-pills"><span class="pp">Java</span><span class="pp">Selenium</span><span class="pp">TestNG</span><span class="pp">Maven</span><span class="pp">POM</span></div><div class="pc-impact"><b>Impact:</b> Eliminated hours of manual regression, improved coverage across critical flows.</div></div>
+    <div class="pc"><div class="pc-n">02</div><div class="pc-tag">GenAI</div><div class="pc-title">LLM-Powered Test Case Generator</div><div class="pc-desc">AI tool that reads requirement docs and auto-generates structured test scenarios via LLM APIs and prompt engineering. Accelerates sprint planning.</div><div class="pc-pills"><span class="pp">Python</span><span class="pp">LLM APIs</span><span class="pp">Prompt Eng.</span><span class="pp">GenAI</span></div><div class="pc-impact"><b>Impact:</b> Reduced test creation time and improved business-to-QA coverage alignment.</div></div>
+    <div class="pc"><div class="pc-n">03</div><div class="pc-tag">CI/CD</div><div class="pc-title">CI/CD QA Pipeline Integration</div><div class="pc-desc">Tests trigger automatically on every commit via GitHub Actions — parallel execution, build failure thresholds, and Slack alerts for real-time feedback.</div><div class="pc-pills"><span class="pp">GitHub Actions</span><span class="pp">Git</span><span class="pp">Java</span><span class="pp">Selenium</span></div><div class="pc-impact"><b>Impact:</b> Bugs caught within minutes of commit — not days later at end-of-sprint testing.</div></div>
+    <div class="pc"><div class="pc-n">04</div><div class="pc-tag">Data Processing</div><div class="pc-title">Critical Data Pipeline Recovery</div><div class="pc-desc">Diagnosed and fixed high-priority PLSQL pipeline failure under deadline. Python validation scripts + monitoring layer deployed to prevent recurrence. Earned On-the-Spot Award.</div><div class="pc-pills"><span class="pp">Python</span><span class="pp">PLSQL</span><span class="pp">Debugging</span><span class="pp">Monitoring</span></div><div class="pc-impact"><b>Impact:</b> Prevented major production outage — On-the-Spot Award 2024.</div></div>
+    <div class="pc"><div class="pc-n">05</div><div class="pc-tag">Workflow Automation</div><div class="pc-title">Python Automation Suite</div><div class="pc-desc">Suite of Python scripts automating QA workflows — test data generation, env setup, JIRA auto-tickets on failures, and bulk reporting. Team-wide weekly savings.</div><div class="pc-pills"><span class="pp">Python</span><span class="pp">JIRA API</span><span class="pp">Scripting</span><span class="pp">REST API</span></div><div class="pc-impact"><b>Impact:</b> Saved hours of manual effort per week across the QA team.</div></div>
+    <div class="pc"><div class="pc-n">06</div><div class="pc-tag">API Testing</div><div class="pc-title">API Testing & Validation Framework</div><div class="pc-desc">Postman collections + Newman CLI validating REST endpoints for correctness, auth flows, performance thresholds, and edge cases. Feeds into CI for continuous health.</div><div class="pc-pills"><span class="pp">Postman</span><span class="pp">Newman</span><span class="pp">REST API</span><span class="pp">JSON Schema</span></div><div class="pc-impact"><b>Impact:</b> Thorough API coverage earlier in cycle, reducing integration bugs downstream.</div></div>
+  </div>
+</section>
+
+<!-- AWARDS -->
+<section id="awards" class="aw-sec">
+  <div class="lbl">Recognition</div>
+  <h2 class="s-title">Awards & Achievements</h2>
+  <div class="aw-grid">
+    <div class="aw-card"><div class="aw-ico">⚡</div><div class="aw-yr">TCS · 2024</div><div class="aw-name">On-the-Spot Award</div><div class="aw-desc">For resolving critical data processing issues under extreme deadline pressure, preventing a major production incident.</div></div>
+    <div class="aw-card"><div class="aw-ico">🏆</div><div class="aw-yr">TCS · 2024</div><div class="aw-name">Applause for the Team</div><div class="aw-desc">Outstanding contribution to high-quality, on-time project delivery through sustained collaboration and engineering excellence.</div></div>
+    <div class="aw-card"><div class="aw-ico">🎓</div><div class="aw-yr">DBATU · 2021</div><div class="aw-name">B.E. — CGPA 7.84</div><div class="aw-desc">Bachelor of Engineering from Dr. Babasaheb Ambedkar Technological University with strong academic standing.</div></div>
+    <div class="aw-card"><div class="aw-ico">💻</div><div class="aw-yr">CDAC Chennai · 2022</div><div class="aw-name">PG-DAC Diploma</div><div class="aw-desc">Post Graduate Diploma in Advanced Computing from one of India's premier technology institutions.</div></div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education" class="edu-sec">
+  <div class="lbl">Education</div>
+  <h2 class="s-title">Academic Background</h2>
+  <div class="edu-grid">
+    <div class="edu-card"><div class="edu-deg">Bachelor of Engineering</div><div class="edu-inst">Dr. Babasaheb Ambedkar Technological University</div><div class="edu-per">Jul 2018 — Aug 2021</div><div class="edu-gr">CGPA: 7.84 / 10</div></div>
+    <div class="edu-card"><div class="edu-deg">Post Graduate Diploma — PG-DAC</div><div class="edu-inst">Centre for Development of Advanced Computing (CDAC), Chennai</div><div class="edu-per">Mar 2022 — Sep 2022</div><div class="edu-gr">Percentage: 63.13%</div></div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="ct-sec">
+  <div class="lbl">Contact</div>
+  <h2 class="ct-big">Let's Work<br><em>Together</em></h2>
+  <p class="ct-sub">Open to QA automation, AI-driven testing, and intelligent delivery roles. Based in Nagpur, India.</p>
+  <div class="ct-row">
+    <a href="mailto:rameshwarbarole105@gmail.com" class="ct-a">✉ Email</a>
+    <a href="tel:+917218435876" class="ct-a">📞 +91 72184 35876</a>
+    <a href="https://github.com/Rameshwar002" target="_blank" class="ct-a">⌥ GitHub</a>
+    <a href="https://linkedin.com/in/rameshwar-barole" target="_blank" class="ct-a">in LinkedIn</a>
+  </div>
+</section>
+
+<footer>
+  <span>© 2025 Rameshwar Barole</span>
+  <span><a href="https://github.com/Rameshwar002" target="_blank">github.com/Rameshwar002</a></span>
+</footer>
+
+<script>
+// cursor
+const cur=document.getElementById('cur'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function l(){rx+=(mx-rx)*.13;ry+=(my-ry)*.13;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(l)})();
+document.querySelectorAll('a,button').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cur.style.transform='translate(-50%,-50%) scale(2.5)';cur.style.background='#8b6914'});
+  el.addEventListener('mouseleave',()=>{cur.style.transform='translate(-50%,-50%) scale(1)';cur.style.background='#1a1610'});
+});
+
+// scroll progress
+window.addEventListener('scroll',()=>{
+  document.getElementById('sp').style.width=(window.scrollY/(document.body.scrollHeight-window.innerHeight)*100)+'%';
+});
+
+// intersection
+const obs=new IntersectionObserver(entries=>{
+  entries.forEach((e,i)=>{if(e.isIntersecting)setTimeout(()=>e.target.classList.add('v'),i*90)});
+},{threshold:.12});
+document.querySelectorAll('.exp-item,.pc,.aw-card,.edu-card').forEach(el=>obs.observe(el));
+
+// skill bars
+const sobs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.sk-fill').forEach(b=>b.style.width=b.dataset.w+'%');
+      sobs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+sobs.observe(document.getElementById('skill-rows'));
+
+// CV download
+document.getElementById('cvBtn').addEventListener('click',function(e){
+  e.preventDefault();
+  const txt=`RAMESHWAR SANGAPPA BAROLE
+QA Engineer | Nagpur, India
++91 7218435876 | rameshwarbarole105@gmail.com
+GitHub: https://github.com/Rameshwar002
+
+SUMMARY
+QA Engineer experienced in Selenium automation, GenAI solutions, CI/CD integration,
+and Python scripting. Strong problem-solver delivering high-quality software at speed.
+
+EXPERIENCE
+Tata Consultancy Services — QA Engineer (Dec 2023 – Present, Nagpur)
+• Selenium WebDriver automation scripts — improved test coverage
+• Java & Python workflow automation — reduced manual effort
+• CI/CD pipeline integration — cut regression testing time
+• JIRA defect tracking — cross-functional collaboration
+• Regression testing — reduced post-release defects
+• Code reviews — raised team script quality
+• Agile stand-ups and sprint reviews
+
+AWARDS
+• On-the-Spot Award (TCS 2024) — Critical data pipeline crisis resolution
+• Applause for the Team (TCS 2024) — On-time, high-quality project delivery
+
+EDUCATION
+B.E. — Dr. Babasaheb Ambedkar Technological University (2018–2021) | CGPA 7.84/10
+PG-DAC — CDAC Chennai (2022) | 63.13%
+
+SKILLS
+Languages:  Java · Python · PLSQL
+Frameworks: Selenium WebDriver · LLM Frameworks
+Tools:      JIRA · Confluence · Git · GitHub · Postman · MS Office
+Domains:    Test Automation · GenAI · CI/CD · API Testing · Workflow Automation
+`;
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(new Blob([txt],{type:'text/plain'}));
+  a.download='Rameshwar_Barole_CV.txt';a.click();
+});
+</script>
+</body>
+</html>
