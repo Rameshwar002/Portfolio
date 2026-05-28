@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rameshwar Barole — QA Engineer</title>
+<title>Rameshwar Barole — Automation Engineer</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,900;1,400;1,700&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
@@ -348,10 +348,10 @@ footer a{color:#c8a96e;text-decoration:none}
     <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M20.45 20.45h-3.55v-5.57c0-1.33-.03-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.47-.9 1.63-1.85 3.37-1.85 3.6 0 4.26 2.37 4.26 5.45v6.29zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.12 20.45H3.56V9h3.56v11.45zM22.22 0H1.77C.79 0 0 .77 0 1.73v20.54C0 23.23.79 24 1.77 24h20.45c.98 0 1.78-.77 1.78-1.73V1.73C24 .77 23.2 0 22.22 0z"/></svg>
     LinkedIn
   </a>
-  <a href="#" class="lb-btn lb-gold" id="cvBtn">
+  <!-- <a href="#" class="lb-btn lb-gold" id="cvBtn">
     <svg width="15" height="15" fill="currentColor" viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
     Download CV
-  </a>
+  </a> -->
 </div>
 
 <!-- ABOUT -->
@@ -361,7 +361,7 @@ footer a{color:#c8a96e;text-decoration:none}
       <div class="lbl">About Me</div>
       <h2 class="s-title">Building Quality Into Every Line of Code</h2>
       <div class="ab-text">
-        <p>I'm Rameshwar Barole — QA Engineer at Tata Consultancy Services, Nagpur. I specialise in test automation, GenAI-powered tooling, and CI/CD pipelines that ship reliable software fast.</p>
+        <p>I'm Rameshwar Barole — Automation Engineer at Tata Consultancy Services, Nagpur. I specialise in test automation, GenAI-powered tooling, and CI/CD pipelines that ship reliable software fast.</p>
         <p>With a B.E. and PG-DAC in Advanced Computing (CDAC Chennai), I bring both depth and breadth — from Selenium frameworks to LLM-based test generators.</p>
         <p>Recognised twice at TCS in 2024 for high-impact delivery and crisis resolution under pressure.</p>
       </div>
@@ -388,7 +388,7 @@ footer a{color:#c8a96e;text-decoration:none}
   <div class="exp-item">
     <div><div class="ec-name">Tata Consultancy Services</div><div class="ec-date">Dec 2023 — Present · Nagpur</div></div>
     <div>
-      <div class="er-title">QA Engineer</div>
+      <div class="er-title">Automation Engineer</div>
       <ul class="er-list">
         <li>Developed & maintained Selenium WebDriver automation scripts, improving test coverage across critical modules.</li>
         <li>Built Java and Python automation to eliminate repetitive workflows, reducing manual effort substantially.</li>
@@ -488,17 +488,17 @@ const sobs=new IntersectionObserver(entries=>{
 sobs.observe(document.getElementById('skill-rows'));
 
 // CV download
-document.getElementById('cvBtn').addEventListener('click', function (e) {
-    e.preventDefault();
+// document.getElementById('cvBtn').addEventListener('click', function (e) {
+//     e.preventDefault();
 
-    const a = document.createElement('a');
-    a.href = 'Resume_rameshwar.pdf';
-    a.download = 'Resume_rameshwar.pdf';
+//     const a = document.createElement('a');
+//     a.href = 'Resume_rameshwar.pdf';
+//     a.download = 'Resume_rameshwar.pdf';
 
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-});
+//     document.body.appendChild(a);
+//     a.click();
+//     document.body.removeChild(a);
+// });
 </script>
 </body>
 </html>
